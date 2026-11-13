@@ -1,11 +1,15 @@
-# ReCoM Management System
+# ReCoM Management System — V9.4 cloud deployment
 
-Private source repository for ReCoM business-management app.
+This private repository contains the ReCoM Next.js application and its Prisma/PostgreSQL schema.
 
-## Deployment
+## Cloud build
 
-Production infrastructure is provisioned on Railway (recom-web + PostgreSQL). This repository is being prepared for the ReCoM V9.4 Next.js source upload.
+The source is bundled as Brotli-encoded text under `payload/` for this initial automated upload. The `postinstall` script runs `unpack.mjs` to reconstruct the 31 application source files, then runs `prisma generate`.
 
-**Important:** This README is not the application. Do not consider the service deployed until the full V9.4 source is uploaded, a production build succeeds, and the health endpoint confirms database connectivity.
+**Deployment environment:** Railway project `ReCoM Management System`, service `recom-web`, plus `Postgres`.
 
-Never commit `.env`, `.env.local`, `node_modules`, `.next` or generated Prisma credentials.
+**Status:** App source uploaded, but Railway cannot connect to this private repository until the Railway GitHub App is granted access. On GitHub, go to Settings → Applications → Installed GitHub Apps → Railway → Configure → Repository access and authorize `ahmadqutob/recom-management-system`.
+
+Do not commit real `.env` files or credentials. This build excludes the original header/footer image binaries and the legacy V8 HTML, which still need migration before full production use.
+
+The next step is attaching `ahmadqutob/recom-management-system` to `recom-web` at Railway, building, and verifying `/api/health`. Do not consider production ready until those pass.
